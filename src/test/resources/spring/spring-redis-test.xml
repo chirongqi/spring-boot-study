@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- <bean id ="redisManager" class="com.namibank.df.common.cache.RedisManager" 
+		init-method="init"> -->
+	<!-- <property name="host" value="${redis.host}"/> -->
+	<!-- <property name="port" value="${redis.port}"/> -->
+	<!-- <property name="expire" value="${redis.expire}"/> -->
+	<!-- <property name="timeout" value="${redis.timeout}"/> -->
+	<!-- </bean> -->
+	<!-- 连接池 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.config.maxTotal}" />
+		<property name="maxIdle" value="${redis.config.maxIdle}" />
+		<property name="minIdle" value="${redis.config.minIdle}" />
+		<property name="maxWaitMillis" value="${redis.config.maxWaitMillis}" />
+		<property name="testOnBorrow" value="true" />
+	</bean>
+
+	<!-- redis缓存管理器 start -->
+	<bean id="redisManager" class="com.namibank.df.common.cache.RedisManager"
+		init-method="init">
+		<property name="jedisPoolConfig" ref="jedisPoolConfig" />
+		<property name="address" value="${redis.address}" />
+		<property name="masterName" value="${redis.masterName}" />
+		<property name="password" value="${redis.password}" />
+		<property name="expire" value="${redis.expire}" />
+		<property name="timeout" value="${redis.timeout}" />
+	</bean>
+	<!-- redis缓存管理器 end -->
+</beans>

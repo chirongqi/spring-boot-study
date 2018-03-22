@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="df-gateway-preauth-testtest" />
+    <dubbo:consumer check="false" timeout="300000" />
+    
+	<dubbo:registry protocol="${gatewayRegistry.dubbo.registry.protocol}"
+		address="${gatewayRegistry.dubbo.registry.address}" check="false"
+		group="dubbo-${env_path}" file="${user.home}/.dubbo-cache/df-gateway-test" />
+
+
+	<!-- 信用卡预授权服务 -->
+	<dubbo:reference id="creditCardPreauthService" interface="com.namibank.df.gateway.service.ICreditCardPreauthService" version="1.0.0"/>
+	<dubbo:reference id="payEngine" interface="com.namibank.df.gateway.service.IPayEngine" version="1.0.0"/>
+	<dubbo:reference id="quickPaymentService" interface="com.namibank.df.gateway.service.IQuickPaymentService" version="1.0.0"/>
+	<dubbo:reference id="creditCardPreauthOperateService" interface="com.namibank.df.gateway.service.ICreditCardPreauthOperateService" version="1.0.0"/>
+</beans>
