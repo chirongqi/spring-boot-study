@@ -15,3 +15,6 @@
 		</includes>
 		<filtering>false</filtering>
 	</resource>
+
+系统运行起来后访问:
+http://localhost:8100/test/apple
