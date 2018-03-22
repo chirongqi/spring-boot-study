@@ -1,0 +1,17 @@
+1、设计配置属性和JavaBean，例如Apple.java
+2、添加自定义的x.xsd;例如：apple.xsd
+3、编写NamespaceHandler和BeanDefinitionParser完成解析工作，会用到NamespaceHandler和BeanDefinitionParser这两个概念。
+       具体说来 NamespaceHandler会根据schema和节点名找到某个BeanDefinitionParser，然后由 BeanDefinitionParser完成具体的
+       解析工作。因此需要分别完成NamespaceHandler和 BeanDefinitionParser的实现类，Spring提供了默认实现类
+     NamespaceHandlerSupport和 AbstractSingleBeanDefinitionParser，简单的方式就是去继承这两个类。
+4、根据spring的需求，需要配置handlers。该文件位置为：META-INF/spring.handlers和META-INF/spring.schemas
+5、配置maven打包环境，打包时将META-INF下的spring.handlers和spring.schemas放入到jar包中，配置如下：
+	<resource>
+		<directory>src/main/java</directory>
+		<includes>
+			<include>**/*.xsd</include>
+			<include>**/*.handlers</include>
+			<include>**/*.schemas</include>
+		</includes>
+		<filtering>false</filtering>
+	</resource>
